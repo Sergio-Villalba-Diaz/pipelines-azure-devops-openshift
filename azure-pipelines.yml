@@ -124,7 +124,7 @@ stages:
               oc login --token=$(OPENSHIFT_TOKEN) --server=$(OPENSHIFT_SERVER) --insecure-skip-tls-verify=true
 
               echo "=== 3. Seleccionando Proyecto ==="
-              oc project testing-account-dev
+              oc project sergioasecas11-dev
 
               echo "=== 4. Aplicando Manifiestos (Creando BuildConfig y Deployment) ==="
               oc apply -f helm/build-config.yaml
@@ -133,16 +133,16 @@ stages:
               oc apply -f helm/route.yaml
 
               echo "=== 5. Iniciando Build en OpenShift (Dockerfile) ==="
-              oc start-build jee-msa-web-demo-pipeline --follow
+              oc start-build pipelines-azure-devops-openshift --follow
 
               echo "=== 6. Reiniciando el despliegue para tomar la nueva imagen ==="
-              oc rollout restart deployment/jee-msa-web-demo-pipeline
-
+              oc rollout restart deployment/pipelines-azure-devops-openshift
+              
               echo "=== 7. Esperando a que el Pod esté listo ==="
-              oc rollout status deployment/jee-msa-web-demo-pipeline
-
+              oc rollout status deployment/pipelines-azure-devops-openshift
+              
               echo "=== 8. Obteniendo URL de la Aplicación ==="
-              oc get route jee-msa-web-demo-pipeline -o jsonpath='{"URL: http://"}{.spec.host}{"\n"}'
+              oc get route pipelines-azure-devops-openshift -o jsonpath='{"URL: http://"}{.spec.host}{"\n"}'
             displayName: 'Descarga CLI, Login y Despliegue Docker'
 
   # ==========================================
