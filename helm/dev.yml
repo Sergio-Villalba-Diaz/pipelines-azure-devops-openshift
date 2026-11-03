@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jee-msa-web-demo-pipeline
+  name: pipelines-azure-devops-openshift
   labels:
-    app: jee-msa-web-demo-pipeline
+    app: pipelines-azure-devops-openshift
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jee-msa-web-demo-pipeline
+      app: pipelines-azure-devops-openshift
   template:
     metadata:
       labels:
-        app: jee-msa-web-demo-pipeline
+        app: pipelines-azure-devops-openshift
     spec:
       containers:
         - name: java-app
-          image: image-registry.openshift-image-registry.svc:5000/testing-account-dev/jee-msa-web-demo-pipeline:latest
+          image: image-registry.openshift-image-registry.svc:5000/sergioasecas11-dev/pipelines-azure-devops-openshift:latest
           ports:
             - containerPort: 8080
