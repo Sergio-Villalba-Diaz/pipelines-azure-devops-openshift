@@ -1,7 +1,7 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: jee-msa-web-demo-pipeline
+  name: pipelines-azure-devops-openshift
 spec:
   lookupPolicy:
     local: true
@@ -9,15 +9,15 @@ spec:
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: jee-msa-web-demo-pipeline
+  name: pipelines-azure-devops-openshift
 spec:
   source:
     type: Git
     git:
-      uri: https://github.com/jefersonvillacis/jee-msa-web-demo-pipeline.git
+      uri: https://github.com/Sergio-Villalba-Diaz/pipelines-azure-devops-openshift.git
   strategy:
     type: Docker
   output:
     to:
       kind: ImageStreamTag
-      name: jee-msa-web-demo-pipeline:latest
+      name: pipelines-azure-devops-openshift:latest
