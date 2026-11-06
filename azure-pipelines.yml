@@ -146,11 +146,31 @@ stages:
             displayName: 'Descarga CLI, Login y Despliegue Docker'
 
   # ==========================================
-  # STAGE 4: NOTIFICACIONES (NOTIFICATIONS)
+  # STAGE 4: VERIFICACIÓN POST-DESPLIEGUE (SMOKE TEST)
+  # ==========================================
+  - stage: SmokeTest
+    displayName: 'Verificar'
+    dependsOn: CD
+    condition: succeeded()
+    jobs:
+      - job: smoke_test
+        displayName: 'Prueba de humo'
+        steps:
+          - script: |
+              echo "Build:  $(Build.BuildNumber)"
+              echo "Rama:   $(Build.SourceBranchName)"
+              echo "Commit: $(Build.SourceVersion)"
+            displayName: 'Mostrar información de la ejecución'
+
+          - script: echo "Simulación de prueba de humo sobre la aplicación desplegada realizada correctamente."
+            displayName: 'Simulación de prueba de humo'
+
+  # ==========================================
+  # STAGE 5: NOTIFICACIONES (NOTIFICATIONS)
   # ==========================================
   - stage: Notifications
     displayName: 'Notificar'
-    dependsOn: [CI, Approval, CD]
+    dependsOn: [CI, Approval, CD, SmokeTest]
     condition: always()
     jobs:
       - job: send_status_email
